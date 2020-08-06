@@ -1,0 +1,8 @@
+name: deathmessage
+version: 1.0
+author: kalibat
+main: US.KaliBat.DeathMessageBot.Main
+api-version: 1.16
+commands:
+  hello:
+  online:
