@@ -3,12 +3,15 @@ package US.KaliBat.DeathMessageBot;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Collection;
 
 public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new DeathListener(), this);
+        getServer().getPluginManager().registerEvents(new ServerListener(), this);
     }
 
     @Override
@@ -18,14 +21,15 @@ public class Main extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("hello")){
-            sender.sendMessage("hello from plugin");
-            return true;
-        }
 
         if (command.getName().equalsIgnoreCase("online")) {
-            int players = Bukkit.getOnlinePlayers().size();
-            sender.sendMessage("Online players: " + players + "!");
+            StringBuilder response = new StringBuilder();
+            final Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+            response.append("Players online: ").append(players.size()).append("\n");
+            for (Player player : players) {
+                response.append(player.getDisplayName()).append("\n");
+            }
+            sender.sendMessage(response.toString());
             return true;
         }
 
