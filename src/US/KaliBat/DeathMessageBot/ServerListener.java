@@ -20,7 +20,7 @@ public class ServerListener implements Listener {
         String deathMessage = event.getDeathMessage();
         String urlEncodedMessage = deathMessage.replace(" ", "%20");
 
-        this.sendBotRequest(urlEncodedMessage);
+        this.sendBotRequest(urlEncodedMessage, "death/");
     }
 
     @EventHandler
@@ -33,8 +33,8 @@ public class ServerListener implements Listener {
         // sendBotRequest(response);
     }
 
-    public void sendBotRequest(String urlEncodedMessage) throws Exception {
-        URL url = new URL("http://127.0.0.1:5000/" + urlEncodedMessage);
+    public void sendBotRequest(String urlEncodedMessage, String path) throws Exception {
+        URL url = new URL("http://127.0.0.1:5000/" + path + urlEncodedMessage);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 

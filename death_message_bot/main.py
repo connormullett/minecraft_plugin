@@ -8,7 +8,7 @@ import threading
 from telegram.ext import Updater, CommandHandler, MessageHandler
 import subprocess
 
-# bot = telegram.Bot(token=os.getenv('MC_BOT_TOKEN'))
+bot = telegram.Bot(token=os.getenv('MC_BOT_TOKEN'))
 
 app = Flask(__name__)
 
@@ -17,12 +17,14 @@ def run_server():
   app.run()
 
 
-@app.route('/<death_message>')
+# accept http requests from server
+@app.route('/death/<death_message>')
 def send_death_message(death_message):
-  bot.send_message(chat_id=-1001220740836, text=death_message)
+  bot.send_message(chat_id=os.getenv('CHAT_ID'), text=death_message)
   return None, 200
 
 
+# sends mcrcon request to get players from plugin, /online is a custom command defined in the plugin
 def online_players_command(update, context):
   stream = os.popen(f'mcrcon -c -H 127.0.0.1 -p {os.getenv("MCRCON_PASS")} online')
   out = stream.read()
@@ -36,7 +38,7 @@ def main():
 
   updater = Updater(os.getenv('MC_BOT_TOKEN'), use_context=True)
   dp = updater.dispatcher
-  # work around for previous code in send_death_message
+
   global bot
   bot = updater.bot
 
