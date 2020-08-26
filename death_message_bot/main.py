@@ -24,7 +24,7 @@ def send_death_message(death_message):
 
 
 def online_players_command(update, context):
-  stream = os.popen(f'mcrcon -H 127.0.0.1 -p {os.getenv("MCRCON_PASS")} online')
+  stream = os.popen(f'mcrcon -c -H 127.0.0.1 -p {os.getenv("MCRCON_PASS")} online')
   out = stream.read()
   out = out.rstrip()
 
