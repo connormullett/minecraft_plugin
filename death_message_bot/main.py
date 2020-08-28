@@ -45,6 +45,8 @@ def all_deaths_command(update, context):
   names = response.split(':')[1].split(',') 
 
   # query each name and format output message
+  # response format 'name has 1 scores:[deaths]: 3'
+  # or 'name has no scores to show'
   out = ''
   for name in names:
     name = name.strip()
@@ -52,11 +54,10 @@ def all_deaths_command(update, context):
     stream = os.popen(player_death_command)
     res = stream.read().split(' ')
     if 'deaths' in res[3]:
-      out += f'{res[0]} has {res[-1]} death(s)\n'
-    else:
-      out += f'{res[0]} has no deaths\n'
+      out += f'{res[0]} has {res[-1].strip()} death(s)\n'
   
   # send message
+  print(out)
   update.message.reply_text(out)
 
 
