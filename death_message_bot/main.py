@@ -46,11 +46,12 @@ def all_deaths_command(update, context):
 
   # query each name and format output message
   out = ''
-  for name in names.rstrip():
-    player_death_command = f'{base_command} scoreboard players list {name}'
+  for name in names:
+    name = name.strip()
+    player_death_command = f'{base_command} "scoreboard players list {name}"'
     stream = os.popen(player_death_command)
     res = stream.read().split(' ')
-    if 'deaths' in res:
+    if 'deaths' in res[3]:
       out += f'{res[0]} has {res[-1]} death(s)\n'
     else:
       out += f'{res[0]} has no deaths\n'
